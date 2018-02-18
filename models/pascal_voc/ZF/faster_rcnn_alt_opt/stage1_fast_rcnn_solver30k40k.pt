@@ -1,6 +1,6 @@
 train_net: "models/pascal_voc/ZF/faster_rcnn_alt_opt/stage1_fast_rcnn_train.pt"
 
-base_lr: 0.001
+base_lr: 0.00001
 lr_policy: "step"
 gamma: 0.1
 stepsize: 30000

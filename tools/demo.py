@@ -66,7 +66,8 @@ def vis_detections(im, class_name, dets, thresh=0.5):
                                                   thresh),
                   fontsize=14)
     plt.axis('off')
-    plt.tight_layout()
+    plt.gcf().set_tight_layout(True)
+    #plt.tight_layout()
     plt.draw()
 
 def demo(net, image_name):
@@ -141,8 +142,8 @@ if __name__ == '__main__':
     for i in xrange(2):
         _, _= im_detect(net, im)
 
-    im_names = ['000456.jpg', '000542.jpg', '001150.jpg',
-                '001763.jpg', '004545.jpg']
+    im_names = ['1.jpg', '2.jpg', '3.jpg',
+                '4.jpg', '5.jpg']
     for im_name in im_names:
         print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
         print 'Demo for data/demo/{}'.format(im_name)

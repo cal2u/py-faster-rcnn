@@ -31,9 +31,9 @@ def parse_args():
     Parse input arguments
     """
     parser = argparse.ArgumentParser(description='Train a Faster R-CNN network')
-    parser.add_argument('--gpu', dest='gpu_id',
-                        help='GPU device id to use [0]',
-                        default=0, type=int)
+#    parser.add_argument('--gpu', dest='gpu_id',
+#                        help='GPU device id to use [0]',
+#                        default=0, type=int)
     parser.add_argument('--net_name', dest='net_name',
                         help='network name (e.g., "ZF")',
                         default=None, type=str)
@@ -77,7 +77,7 @@ def get_solvers(net_name):
                [net_name, n, 'stage2_fast_rcnn_solver30k40k.pt']]
     solvers = [os.path.join(cfg.MODELS_DIR, *s) for s in solvers]
     # Iterations for each training stage
-    max_iters = [80000, 40000, 80000, 40000]
+    max_iters = [100, 75, 100, 75]
     # max_iters = [100, 100, 100, 100]
     # Test prototxt for the RPN
     rpn_test_prototxt = os.path.join(
@@ -99,8 +99,9 @@ def _init_caffe(cfg):
     np.random.seed(cfg.RNG_SEED)
     caffe.set_random_seed(cfg.RNG_SEED)
     # set up caffe
-    caffe.set_mode_gpu()
-    caffe.set_device(cfg.GPU_ID)
+    #caffe.set_mode_gpu()
+    #caffe.set_device(cfg.GPU_ID)
+    caffe.set_mode_cpu()
 
 def train_rpn(queue=None, imdb_name=None, init_model=None, solver=None,
               max_iters=None, cfg=None):
@@ -138,6 +139,8 @@ def rpn_generate(queue=None, imdb_name=None, rpn_model_path=None, cfg=None,
                  rpn_test_prototxt=None):
     """Use a trained RPN to generate proposals.
     """
+    print "========= imdb_name  ======", imdb_name
+    print "========= test prototext ======",rpn_test_prototxt
 
     cfg.TEST.RPN_PRE_NMS_TOP_N = -1     # no pre NMS filtering
     cfg.TEST.RPN_POST_NMS_TOP_N = 2000  # limit top boxes after NMS
@@ -210,7 +213,7 @@ if __name__ == '__main__':
         cfg_from_file(args.cfg_file)
     if args.set_cfgs is not None:
         cfg_from_list(args.set_cfgs)
-    cfg.GPU_ID = args.gpu_id
+    #cfg.GPU_ID = args.gpu_id
 
     # --------------------------------------------------------------------------
     # Pycaffe doesn't reliably free GPU memory when instantiated nets are
@@ -257,7 +260,7 @@ if __name__ == '__main__':
     p.join()
 
     print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-    print 'Stage 1 Fast R-CNN using RPN proposals, init from ImageNet model'
+    print 'Stage 1 Train Fast R-CNN using RPN proposals, init from ImageNet model'
     print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 
     cfg.TRAIN.SNAPSHOT_INFIX = 'stage1'
