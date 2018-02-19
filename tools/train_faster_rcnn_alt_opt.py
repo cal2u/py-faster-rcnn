@@ -71,13 +71,14 @@ def get_solvers(net_name):
     # Faster R-CNN Alternating Optimization
     n = 'faster_rcnn_alt_opt'
     # Solver for each training stage
+    print "LOADING SOLVERS FROM ", cfg.MODELS_DIR
     solvers = [[net_name, n, 'stage1_rpn_solver60k80k.pt'],
                [net_name, n, 'stage1_fast_rcnn_solver30k40k.pt'],
                [net_name, n, 'stage2_rpn_solver60k80k.pt'],
                [net_name, n, 'stage2_fast_rcnn_solver30k40k.pt']]
     solvers = [os.path.join(cfg.MODELS_DIR, *s) for s in solvers]
     # Iterations for each training stage
-    max_iters = [100, 75, 100, 75]
+    max_iters = [500, 500, 500, 500]
     # max_iters = [100, 100, 100, 100]
     # Test prototxt for the RPN
     rpn_test_prototxt = os.path.join(
@@ -107,7 +108,7 @@ def train_rpn(queue=None, imdb_name=None, init_model=None, solver=None,
               max_iters=None, cfg=None):
     """Train a Region Proposal Network in a separate training process.
     """
-
+    print "========= imdb_name  ======", imdb_name
     # Not using any proposals, just ground-truth boxes
     cfg.TRAIN.HAS_RPN = True
     cfg.TRAIN.BBOX_REG = False  # applies only to Fast R-CNN bbox regression

@@ -24,12 +24,12 @@ import scipy.io as sio
 import caffe, os, sys, cv2
 import argparse
 
-CLASSES = ('__background__',
-           'aeroplane', 'bicycle', 'bird', 'boat',
-           'bottle', 'bus', 'car', 'cat', 'chair',
-           'cow', 'diningtable', 'dog', 'horse',
-           'motorbike', 'person', 'pottedplant',
-           'sheep', 'sofa', 'train', 'tvmonitor')
+CLASSES = ('__background__',  'basketball')
+          # 'aeroplane', 'bicycle', 'bird', 'boat',
+          # 'bottle', 'bus', 'car', 'cat', 'chair',
+          # 'cow', 'diningtable', 'dog', 'horse',
+          # 'motorbike', 'person', 'pottedplant',
+          # 'sheep', 'sofa', 'train', 'tvmonitor')
 
 NETS = {'vgg16': ('VGG16',
                   'VGG16_faster_rcnn_final.caffemodel'),
@@ -143,8 +143,8 @@ if __name__ == '__main__':
     for i in xrange(2):
         _, _= im_detect(net, im)
 
-    im_names = ['1.jpg', '2.jpg', '3.jpg',
-                '4.jpg', '5.jpg']
+    im_names = ['b1.jpg', 'b2.jpg', 'b3.jpg',
+                'b4.jpg', 'b5.jpg']
     for im_name in im_names:
         print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
         print 'Demo for data/demo/{}'.format(im_name)

@@ -51,7 +51,7 @@ echo Logging output to "$LOG"
 time ./tools/train_faster_rcnn_alt_opt.py --net_name ${NET} \
   --weights data/imagenet_models/${NET}.v2.caffemodel \
   --imdb ${TRAIN_IMDB} \
-  --cfg experiments/cfgs/faster_rcnn_alt_opt.yml \
+  --cfg experiments/cfgs/basketball.yml \
   ${EXTRA_ARGS}
 
 set +x

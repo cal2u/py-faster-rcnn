@@ -47,6 +47,7 @@ class SolverWrapper(object):
             self.solver.net.copy_from(pretrained_model)
 
         self.solver_param = caffe_pb2.SolverParameter()
+        print "========== MODEL LOADED FROM =========",solver_prototxt
         with open(solver_prototxt, 'rt') as f:
             pb2.text_format.Merge(f.read(), self.solver_param)
 
